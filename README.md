@@ -1,0 +1,1 @@
+This is a Task Management Application that allows users to create, manage, and track tasks efficiently. The app includes features such as task creation, editing, categorization, and prioritization. It is designed to help users stay organized and productive.
