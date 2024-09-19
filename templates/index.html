@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Management App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Task Management</h1>
+        <form id="task-form">
+            <input type="text" id="title" name="title" placeholder="Task Title" required>
+            <input type="text" id="description" name="description" placeholder="Task Description">
+            <select id="priority" name="priority">
+                <option value="1">Low Priority</option>
+                <option value="2">Medium Priority</option>
+                <option value="3">High Priority</option>
+            </select>
+            <button type="submit">Add Task</button>
+        </form>
+        <ul id="task-list">
+            {% for task in tasks %}
+            <li data-id="{{ task.id }}" class="priority-{{ task.priority }} {% if task.completed %}completed{% endif %}">
+                <span class="task-title">{{ task.title }}</span>
+                <p class="task-description">{{ task.description }}</p>
+                <span class="task-priority">Priority: {{ task.priority }}</span>
+                <button onclick="completeTask({{ task.id }})">{% if task.completed %}Uncomplete{% else %}Complete{% endif %}</button>
+                <button onclick="editTask({{ task.id }})">Edit</button>
+                <button onclick="deleteTask({{ task.id }})">Delete</button>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <h2>Edit Task</h2>
+            <form id="edit-form">
+                <input type="hidden" id="edit-id" name="id">
+                <input type="text" id="edit-title" name="title" required>
+                <input type="text" id="edit-description" name="description">
+                <select id="edit-priority" name="priority">
+                    <option value="1">Low Priority</option>
+                    <option value="2">Medium Priority</option>
+                    <option value="3">High Priority</option>
+                </select>
+                <button type="submit">Save Changes</button>
+                <button type="button" onclick="closeEditModal()">Cancel</button>
+            </form>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
